@@ -1,0 +1,144 @@
+"----------------------------------------
+"設定
+"----------------------------------------
+" バックアップファイルを作らない
+set nobackup
+" スワップファイルを作らない
+set noswapfile
+" 編集中のファイルが変更されたら自動で読み直す
+set autoread
+" バッファが編集中でもその他のファイルを開けるように
+set hidden
+" 入力中のコマンドをステータスに表示する
+set showcmd
+"----------------------------------------
+"文字コードの設定
+"----------------------------------------
+set encoding=utf-8
+scriptencoding utf-8
+" 保存時の文字コード
+set fileencoding=utf-8
+ " 読み込み時の文字コードの自動判別. 左側が優先される
+set fileencodings=ucs-boms,utf-8,euc-jp,cp932
+" 改行コードの自動判別. 左側が優先される
+set fileformats=unix,dos,mac 
+" □や○文字が崩れる問題を解決
+set ambiwidth=double 
+"----------------------------------------
+"タブ・インデント
+"----------------------------------------
+" タブ入力を複数の空白入力に置き換える
+set expandtab 
+" 画面上でタブ文字が占める幅
+set tabstop=4 
+" 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
+set softtabstop=4 
+" 改行時に前の行のインデントを継続する
+set autoindent 
+" 改行時に前の行の構文をチェックし次の行のインデントを増減する
+set smartindent 
+" smartindentで増減する幅
+set shiftwidth=4 
+" 不可視文字を可視化(タブが「▸-」と表示される)
+set listchars=tab:^\ ,trail:~
+"----------------------------------------
+"文字列検索
+"----------------------------------------
+" インクリメンタルサーチ. １文字入力毎に検索を行う
+set incsearch 
+" 検索パターンに大文字小文字を区別しない
+set ignorecase 
+" 検索パターンに大文字を含んでいたら大文字小文字を区別する
+set smartcase 
+" 検索結果をハイライト
+set hlsearch 
+
+" ESCキー2度押しでハイライトの切り替え
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
+"----------------------------------------
+"カーソル
+"----------------------------------------
+" カーソルの左右移動で行末から次の行の行頭への移動が可能になる
+set whichwrap=b,s,h,l,<,>,[,],~ 
+" 行番号を表示
+set number 
+" カーソルラインをハイライト
+set cursorline 
+
+" 行が折り返し表示されていた場合、行単位ではなく表示行単位でカーソルを移動する
+nnoremap j gj
+nnoremap k gk
+nnoremap <down> gj
+nnoremap <up> gk
+
+" バックスペースキーの有効化
+set backspace=indent,eol,start
+"----------------------------------------
+"カッコ・タグジャンプ
+"----------------------------------------
+" 括弧の対応関係を一瞬表示する
+set showmatch 
+" Vimの「%」を拡張する
+source $VIMRUNTIME/macros/matchit.vim 
+"----------------------------------------
+"コマンド補完
+"----------------------------------------
+" コマンドモードの補完
+set wildmenu 
+" 保存するコマンド履歴の数
+set history=5000 
+"----------------------------------------
+"表示設定
+"----------------------------------------
+" ビープ音を可視化
+"set visualbell
+" エラーメッセージの表示時にビープを鳴らさない
+set noerrorbells
+" メッセージ表示欄を2行確保
+set cmdheight=2
+" ステータス行を常に表示
+set laststatus=2
+" コメントの色を水色
+hi Comment ctermfg=3
+" タイトルを表示
+set title
+
+""""""""""""""""""""""""""""""
+" プラグインのセットアップ
+""""""""""""""""""""""""""""""
+call plug#begin('~/.vim/plugged')
+
+" ファイルオープンを便利に
+Plug 'Shougo/unite.vim'
+" Unite.vimで最近使ったファイルを表示できるようにする
+Plug 'Shougo/neomru.vim'
+" ファイルをtree表示してくれる
+Plug 'scrooloose/nerdtree'
+" ...省略
+
+call plug#end()
+""""""""""""""""""""""""""""""
+" http://blog.remora.cx/2010/12/vim-ref-with-unite.html
+""""""""""""""""""""""""""""""
+" Unit.vimの設定
+""""""""""""""""""""""""""""""
+" 入力モードで開始する
+let g:unite_enable_start_insert=1
+" バッファ一覧
+noremap <C-P> :Unite buffer<CR>
+" ファイル一覧
+noremap <C-N> :Unite -buffer-name=file file<CR>
+" 最近使ったファイルの一覧
+noremap <C-Z> :Unite file_mru<CR>
+" sourcesを「今開いているファイルのディレクトリ」とする
+noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
+" ウィンドウを分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+" ウィンドウを縦に分割して開く
+au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+" ESCキーを2回押すと終了する
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+""""""""""""""""""""""""""""""

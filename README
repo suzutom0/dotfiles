@@ -38,4 +38,13 @@ git add test.txt
 git commit -m "変更してみたよ"
 #データの送信
 git push origin master
-④　
+④　ブランチの作成，移動
+#ブランチ確認
+git branch
+#ブランチ作成
+git branch 名前
+#ブランチ確認
+git branch
+#ブランチの移動
+git checkout testbranch
+
