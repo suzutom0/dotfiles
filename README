@@ -1,0 +1,41 @@
+GitHub導入 2019/8/28
+①　アカウント作成
+https://github.com/
+上記のページからFREEプランでアカウント登録
+②　リポジトリ作成
+「New Repository」ボタンクリック
+「Repository name」登録
+「Public」選択
+「Initialized this repository with a REDEME」選択しない
+「gitignore」,「license」Noneを選択
+リモートリポジトリのアドレスを控える
+③　端末入力
+# dotfilesディレクトリを作成
+mkdir ~/dotfiles
+# 今までのvimrc移動
+mv  ~/.vimrc ~/dotfiles/vimrc/_vimrc
+# シンボルリンクリンク（ショートカット）を作成
+ln -s ~/dotfiles/vimrc/_vimrc ~/.vimrc
+#dotfilesに移動
+cd ~/dotfiles
+#ローカルリポジトリを作成
+git init
+#READMEファイル作成
+touch README
+#インデックスに追加
+git add README
+git add _vimrc
+#ローカルリポジトリに登録（コミット）
+git commit -m 'first_commit'
+#追加したインデックス（ファイルの変更点など）をGitHubに作成
+git remote add origin リポジトリのURI
+#ローカルリポジトリのファイルをGitHubのリポジトリに送信
+git push origin master
+④　プッシュしたデータを変更・更新してみる
+#変更をインデックスに追加
+git add test.txt
+#ファイルを登録（コミット）
+git commit -m "変更してみたよ"
+#データの送信
+git push origin master
+④　
